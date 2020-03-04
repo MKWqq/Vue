@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>virtual dom diff</title>
+	<meta charset="UTF-8">
+	<title>virtual dom diff</title>
 </head>
 <body>
-
+<div id="testAttr" data-index="123">testAttr</div>
 <script type="text/javascript" src="lib/index.js"></script>
 <script type="text/javascript">
-    console.log(name);
+	/* todo ./[]/setAttribute设置元素属性 */
+	// let testAttrNode = document.getElementById('testAttr');
+	// testAttrNode.dataIndex = '12';
+	// testAttrNode.id = '12';
+	// console.log(testAttrNode.dataIndex);
+	/* todo 属性打印 */
+	// let divNode = document.createElement('div');
+	// let str = '';
+	// for (let key in divNode) {
+	// 	str += ' ' + key;
+	// }
+	// console.log(str);
 </script>
 </body>
 </html>
