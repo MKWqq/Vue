@@ -12,12 +12,15 @@ Array.prototype.forEach=function(fn){
 Array.prototype.push=function(value){
     this[this.length]=value;
 };
-export default class Utils{
+class Utils{
     type(value){
         return Object.prototype.toString.call(value).replace(/\[object\s|\]/g,'');
     }
     isArray(value){
-        return this.type(value).toLowerCase()==='array'.toUpperCase();
+        return this.type(value).toLowerCase()==='array';
+    }
+    isObject(value){
+        return this.type(value).toLowerCase()==='object';
     }
     slice(arrayLike,index){
         return Array.prototype.slice.call(arrayLike,index);
@@ -70,3 +73,4 @@ export default class Utils{
         }
     }
 }
+export default new Utils();
