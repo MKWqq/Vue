@@ -4,5 +4,5 @@
 const testsContext=require.context('./src',true,/\.spec.js$/);
 testsContext.keys().forEach(testsContext);
 
-const VirtualDiffContext=require.context('../VirtualDiff',true,/\.js$/);
-VirtualDiffContext.keys().forEach(VirtualDiffContext);
+// const VirtualDiffContext=require.context('../VirtualDiff',true,/\.js$/);
+// VirtualDiffContext.keys().forEach(VirtualDiffContext);

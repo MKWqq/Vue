@@ -11,7 +11,7 @@ class VNode{
         this.tag=tag;
         this.child=child;
         this.children=children;
-        this.attrsProps=props;
+        this.attrsProps=props||{};
     }
     /*
         虚拟DOM转为真实DOM
