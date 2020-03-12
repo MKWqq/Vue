@@ -6,3 +6,6 @@ testsContext.keys().forEach(testsContext);
 
 // const VirtualDiffContext=require.context('../VirtualDiff',true,/\.js$/);
 // VirtualDiffContext.keys().forEach(VirtualDiffContext);
+
+// const algorithmContext=require.context('../algorithm',true,/.js$/);
+// algorithmContext.keys().forEach(algorithmContext);
