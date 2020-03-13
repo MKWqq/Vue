@@ -28,11 +28,8 @@ class VNode{
      *  */
     render(){
         let ANode=document.createElement(this.tag);
-        let {attrs=null}=this.props;
-        if(attrs&&utils.isObject(attrs)){
-            Object.keys(attrs).forEach(attrKey=>{
-                ANode.setAttribute(attrKey,attrs[attrKey]);
-            });
+        for(let propName in this.props){
+            utils.setAttr(ANode,propName,this.props[propName]);
         }
         this.children.forEach(child=>{
             (child instanceof VNode)?ANode.appendChild(child.render()):ANode.appendChild(document.createTextNode(child));

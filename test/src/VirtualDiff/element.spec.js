@@ -13,7 +13,7 @@ import createElement from '../../../VirtualDiff/lib/element';
 describe('Test createElement', function () {
     let liArr = ['面包', '辣子鸡', '冷吃兔', '关东煮'];
     let childrenNode = liArr.map((childNode, index) => {
-        return createElement('li', {attrs: {dataIndex: index}}, childNode);
+        return createElement('li', {dataIndex: index}, childNode);
     });
     it('Element\'s count is the sum of its children\'s count',()=>{
         let rootVNode = createElement('ul', null, childrenNode);
@@ -30,16 +30,13 @@ describe('Test createElement', function () {
         expect(rootVNode.children[0].count).is.equal(1);
         expect(rootVNode.props).is.a('object').is.not.null;
     });
-    it('has props,test create vNode:', function () {
-        let rootVNode = createElement('ul', {attrs: {id: 'ul'}}, childrenNode);
+    it('test create vNode:', function () {
+        let rootVNode = createElement('ul', {id: 'ul'}, childrenNode);
         // todo 测试tag是否赋值成功
         expect(rootVNode.tag).is.a('string', 'tag数据类型应为string').is.equal('ul');
         expect(rootVNode.children).be.a('array', 'children数据类型应为array').lengthOf(liArr.length);
         // todo 测试配置属性是否赋值成功
-        expect(rootVNode.props).is.a('object', 'props数据类型为object').has.property('attrs');
-        expect(rootVNode.props.attrs).is.a('object','props.attrs数据类型为object').satisfy(function (value) {
-            return value.id && value.id === 'ul';
-        }, '根元素props测试');
+        expect(rootVNode.props).is.a('object', 'props数据类型为object').has.property('id');
     });
     it('test childrenNode item',function(){
         // todo 测试有child，无children虚拟dom创建情况
@@ -48,7 +45,7 @@ describe('Test createElement', function () {
         expect(childrenNode[0].count).is.equal(1);
     });
     it('has props,test virtual element render:',function(){
-        let rootVNode = createElement('ul', {attrs: {id: 'ul'}}, childrenNode);
+        let rootVNode = createElement('ul', {id: 'ul'}, childrenNode);
         let rootNode=rootVNode.render();
         // todo 测试vNode render方法
         expect(rootNode.tagName.toLowerCase()).is.equal('ul');
