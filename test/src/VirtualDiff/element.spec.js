@@ -19,6 +19,17 @@ describe('Test createElement', function () {
         let rootVNode = createElement('ul', null, childrenNode);
         expect(rootVNode.count).is.equal(8);
     });
+    it('Element should have a key property if it\`s passed',()=>{
+        let rootVNode=createElement('ul',{key:'uuid'},null);
+        expect(rootVNode.key).is.equal('uuid');
+    });
+    it('Passing dynamic parameters: `props` is optional',function(){
+        let rootVNode = createElement('ul', null, childrenNode);
+        expect(rootVNode.tag).is.equal('ul');
+        expect(rootVNode.children).is.a('array').and.has.lengthOf(liArr.length);
+        expect(rootVNode.children[0].count).is.equal(1);
+        expect(rootVNode.props).is.a('object').is.not.null;
+    });
     it('has props,test create vNode:', function () {
         let rootVNode = createElement('ul', {attrs: {id: 'ul'}}, childrenNode);
         // todo 测试tag是否赋值成功
@@ -30,16 +41,11 @@ describe('Test createElement', function () {
             return value.id && value.id === 'ul';
         }, '根元素props测试');
     });
-    it('Passing dynamic parameters: `props` is optional',function(){
-        let rootVNode = createElement('ul', null, childrenNode);
-        expect(rootVNode.tag).is.equal('ul');
-        expect(rootVNode.children).is.a('array').and.has.lengthOf(liArr.length);
-        expect(rootVNode.props).is.not.null;
-    });
     it('test childrenNode item',function(){
         // todo 测试有child，无children虚拟dom创建情况
         expect(childrenNode[0]).is.a('object','childrenNode[0]数据类型应为object');
         expect(childrenNode[0].children[0]).is.equal(liArr[0]);
+        expect(childrenNode[0].count).is.equal(1);
     });
     it('has props,test virtual element render:',function(){
         let rootVNode = createElement('ul', {attrs: {id: 'ul'}}, childrenNode);
