@@ -1,17 +1,22 @@
 /**
  * description:create virtual dom and switch virtual dom to actual dom
  * date:2020/03/09
- * @return：createVirtualDOM(tagName,props:{},child/children)
+ * @return：createVirtualDOM(tagName,props:{},children:[Text/VNode])
  * */
 /* todo:创建虚拟dom，并含render方法，将虚拟dom转为真实dom */
 import utils from './utils'
 class VNode{
-    constructor(vNodeConfig){
-        let {tag='',child=null,children=[],props}=vNodeConfig;
+    constructor(tag='',props,children=[]){
         this.tag=tag;
-        this.child=child;
         this.children=children;
-        this.attrsProps=props||{};
+        this.props=props||{};
+        this.key=props?props.key:void 666;
+        this.count=children.reduce((accumValue,child)=>{
+            if(child instanceof VNode){
+                return (++accumValue)+child.count;
+            }
+            return ++accumValue;
+        },0);
     }
     /*
         虚拟DOM转为真实DOM
@@ -23,27 +28,24 @@ class VNode{
      *  */
     render(){
         let ANode=document.createElement(this.tag);
-        let {attrs=null}=this.attrsProps;
+        let {attrs=null}=this.props;
         if(attrs&&utils.isObject(attrs)){
             Object.keys(attrs).forEach(attrKey=>{
                 ANode.setAttribute(attrKey,attrs[attrKey]);
             });
         }
-        this.child&&ANode.appendChild(document.createTextNode(this.child));
         this.children.forEach(child=>{
-            child instanceof VNode&&ANode.appendChild(child.render());
+            (child instanceof VNode)?ANode.appendChild(child.render()):ANode.appendChild(document.createTextNode(child));
         });
         return ANode;
     }
 }
 
 /* 模拟vue render的createElement */
-export default function createElement(tag,props={},childNode){
-    let children=[],child='';
-    if(childNode&&utils.isArray(childNode)){
-        children=childNode;
-    }else{
-        child=childNode;
+export default function createElement(tag,props={},children=[]){
+    /* 将子节点处理为数组 */
+    if(!utils.isArray(children)){
+        children=utils.slice(arguments,2).filter(utils.truthy);
     }
-    return new VNode({tag,props,children,child});
+    return new VNode(tag,props,children);
 }

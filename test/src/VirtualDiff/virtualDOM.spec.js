@@ -15,31 +15,31 @@ describe('Test createElement', function () {
     let childrenNode = liArr.map((childNode, index) => {
         return createElement('li', {attrs: {dataIndex: index}}, childNode);
     });
+    it('Element\'s count is the sum of its children\'s count',()=>{
+        let rootVNode = createElement('ul', null, childrenNode);
+        expect(rootVNode.count).is.equal(8);
+    });
     it('has props,test create vNode:', function () {
         let rootVNode = createElement('ul', {attrs: {id: 'ul'}}, childrenNode);
         // todo 测试tag是否赋值成功
         expect(rootVNode.tag).is.a('string', 'tag数据类型应为string').is.equal('ul');
-        // todo 测试无child，有children虚拟dom创建情况
-        expect(rootVNode.child).be.a('string', 'child数据类型应为string').empty;
         expect(rootVNode.children).be.a('array', 'children数据类型应为array').lengthOf(liArr.length);
         // todo 测试配置属性是否赋值成功
-        expect(rootVNode.attrsProps).is.a('object', 'attrsProps数据类型为object').has.property('attrs');
-        expect(rootVNode.attrsProps.attrs).is.a('object','attrsProps.attrs数据类型为object').satisfy(function (value) {
+        expect(rootVNode.props).is.a('object', 'props数据类型为object').has.property('attrs');
+        expect(rootVNode.props.attrs).is.a('object','props.attrs数据类型为object').satisfy(function (value) {
             return value.id && value.id === 'ul';
-        }, '根元素attrsProps测试');
+        }, '根元素props测试');
     });
     it('Passing dynamic parameters: `props` is optional',function(){
         let rootVNode = createElement('ul', null, childrenNode);
         expect(rootVNode.tag).is.equal('ul');
-        expect(rootVNode.child).is.empty;
         expect(rootVNode.children).is.a('array').and.has.lengthOf(liArr.length);
-        expect(rootVNode.attrsProps).is.not.null;
+        expect(rootVNode.props).is.not.null;
     });
     it('test childrenNode item',function(){
         // todo 测试有child，无children虚拟dom创建情况
         expect(childrenNode[0]).is.a('object','childrenNode[0]数据类型应为object');
-        expect(childrenNode[0].child).is.a('string','childrenNode[0].child数据类型为string，为文本节点').is.equal(liArr[0]);
-        expect(childrenNode[0].children).is.a('array','childrenNode[0].children数据类型为array').empty;
+        expect(childrenNode[0].children[0]).is.equal(liArr[0]);
     });
     it('has props,test virtual element render:',function(){
         let rootVNode = createElement('ul', {attrs: {id: 'ul'}}, childrenNode);

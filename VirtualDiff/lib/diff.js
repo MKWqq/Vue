@@ -6,7 +6,7 @@
     疑问:
         新旧虚拟DOM树对比时，对比唯一key是什么？怎么赋值？默认key是什么？常用的key有哪些？
         VNode count属性作用：记录当前节点的所有子节点数量
-        VNode key作用：防止复用
+        VNode key作用：防止复用；便于同级VNode对比时，找到相应的VNode，可以判断VNode是删除，还是移动了位置，还是新增的节点；
         patches key:唯一标识与count关系
  */
 /*
