@@ -26,6 +26,7 @@
  **/
 import utils from './utils';
 
+/* todo diffProps:相同位置新旧节点，对比props */
 function diffProps(oldNode, newNode) {
     let oldProps = oldNode.props || {}, newProps = newNode.props || {};
     let propsPatches = {}, count = 0;
