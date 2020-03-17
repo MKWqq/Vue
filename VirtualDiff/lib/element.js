@@ -4,7 +4,7 @@
  * @return：createVirtualDOM(tagName,props:{},children:[Text/VNode])
  * */
 /* todo:创建虚拟dom，并含render方法，将虚拟dom转为真实dom */
-import utils from './utils'
+import utils from '../../utils'
 class VNode{
     constructor(tag='',props,children=[]){
         this.tag=tag;

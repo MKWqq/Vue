@@ -12,7 +12,7 @@ Array.prototype.forEach=function(fn){
 Array.prototype.push=function(value){
     this[this.length]=value;
 };
-class Utils{
+export default class BaseUtils{
     type(value){
         return Object.prototype.toString.call(value).replace(/\[object\s|\]/g,'');
     }
@@ -73,4 +73,3 @@ class Utils{
         }
     }
 }
-export default new Utils();

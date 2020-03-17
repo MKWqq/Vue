@@ -24,7 +24,7 @@
             leftNode为左边的节点。leftNode为null，表明这是子节点循环的第一个节点，执行到该节点已经执行了多少次，由父节点传递的index确定。
             leftNode不为null，currentNodeIndex为执行到leftNode时已经执行了N次，leftNode.count来确定leftNode子节点已经执行了好多次，currentNodeIndex与leftNode.count确定执行到当前节点已经执行了N次。
  **/
-import utils from './utils';
+import utils from '../../utils';
 
 /* todo diffProps:相同位置新旧节点，对比props */
 function diffProps(oldNode, newNode) {
