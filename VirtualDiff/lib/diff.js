@@ -25,6 +25,50 @@
             leftNode不为null，currentNodeIndex为执行到leftNode时已经执行了N次，leftNode.count来确定leftNode子节点已经执行了好多次，currentNodeIndex与leftNode.count确定执行到当前节点已经执行了N次。
  **/
 import utils from '../../utils';
+import patch from './patch';
+import listDiff from './list-diff';
+
+function diff(oldTree, newTree) {
+    let index = 0, patches = {};
+    dfsWalk(oldTree, newTree, index, patches);
+    return patches;
+}
+
+/* todo 确定的新旧Node一一对比 */
+function dfsWalk(oldNode, newNode, index, patches) {
+    if (!oldNode || !newNode) return false;
+    let currentPatch=[];// 不直接patches[index]原因：如果没有变化就不存在有空数组情况
+    if (oldNode.tag !== newNode.tag || (oldNode.props.key && oldNode.props.key !== newNode.props.key)) {
+        currentPatch.push({type: patch.REPLACE, node: newNode});
+    } else if (utils.isString(oldNode) && utils.isString(newNode)) {
+        if (newNode !== oldNode) {
+            currentPatch.push({ type: patch.TEXT, content: newNode })
+        }
+        // Nodes are the same, diff old node's props and children
+    }else {
+        // 对比props
+        let propsPatches = diffProps(oldNode, newNode);
+        propsPatches && currentPatch.push({type: patch.PROPS, props: propsPatches});
+        // 对比子节点
+        if(oldNode.children.length&&newNode.children.length&&!isIgnoreChildren(newNode)) diffChildren(oldNode.children, newNode.children, index, patches,currentPatch);
+    }
+    if(currentPatch.length) patches[index]=currentPatch;
+}
+
+/* todo 对比子节点 */
+function diffChildren(oldChildren, newChildren, index, patches,currentPatch) {
+    let diffs = listDiff(oldChildren, newChildren, 'key');
+    newChildren = diffs.children;
+    diffs.moves.length && currentPatch.push({type: patch.REORDER, moves: diffs.moves});
+    /* leftNode为左边的节点。leftNode为null，表明这是子节点循环的第一个节点，执行到该节点已经执行了多少次，由父节点传递的index确定。leftNode不为null，currentNodeIndex为执行到leftNode时已经执行了N次，leftNode.count来确定leftNode子节点已经执行了好多次，currentNodeIndex与leftNode.count确定执行到当前节点已经执行了N次。 */
+    let leftNode = null;
+    let currentNodeIndex = index;
+    utils.each(oldChildren, (child, i) => {
+        currentNodeIndex = (leftNode && leftNode.count) ? (++currentNodeIndex + leftNode.count) : ++currentNodeIndex;
+        dfsWalk(child, newChildren[i], currentNodeIndex, patches);
+        leftNode = child;
+    });
+}
 
 /* todo diffProps:相同位置新旧节点，对比props */
 function diffProps(oldNode, newNode) {
@@ -48,4 +92,9 @@ function diffProps(oldNode, newNode) {
     return propsPatches;
 }
 
-export default {};
+/* todo 判断是否不对比该Node的子节点 */
+function isIgnoreChildren(node) {
+    return node.props && node.props.hasOwnProperty('ignore');
+}
+
+export default diff;

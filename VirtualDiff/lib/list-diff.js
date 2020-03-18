@@ -26,6 +26,7 @@ function diff (oldList, newList, key) {
 
     // fist pass to check item in old list: if it's removed or not
     // oldList与newList对比，找出删除的VNode(null)，children为对比后的新数组[child,free[0],null——该节点被删除]
+    /* todo oldList与newList对比，组成含oldList length新数组[keyNode,newListFreeNode,null,...] */
     while (i < oldList.length) {
         item = oldList[i]
         itemKey = getItemKey(item, key)
@@ -48,6 +49,7 @@ function diff (oldList, newList, key) {
     // remove items no longer exist
     i = 0;
     // 标记被删除的Node
+    /* todo 删除simulateList中null，即在newList中未找到相应key的Node，即删除的Node */
     while (i < simulateList.length) {
         if (simulateList[i] === null) {
             remove(i)
@@ -60,6 +62,7 @@ function diff (oldList, newList, key) {
     // i is cursor pointing to a item in new list
     // j is cursor pointing to a item in simulateList
     var j = i = 0
+    /* todo newList与删除null的simulateList对比，查找newList新增Node，或oldList中还未删除的Node */
     while (i < newList.length) {
         item = newList[i]
         itemKey = getItemKey(item, key)
@@ -146,5 +149,5 @@ function getItemKey (item, key) {
         : key(item)
 }
 
-exports.makeKeyIndexAndFree = makeKeyIndexAndFree // exports for test
-exports.diff = diff
+// exports.makeKeyIndexAndFree = makeKeyIndexAndFree // exports for test
+export default diff

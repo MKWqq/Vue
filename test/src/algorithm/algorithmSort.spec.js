@@ -20,7 +20,7 @@ describe('排序算法测试',function(){
         checkMinToMax(sort.binaryInsertionSort([11,12,13,14,15,16,3,44,38,5,47,15,36,26,27,2,46,4,19,50,48,33]),'binaryInsertionSort');
     });
     function checkMinToMax(sortArr,errorMessage){
-        console.log(errorMessage,sortArr);
+        // console.log(errorMessage,sortArr);
         for(let i=0;i<sortArr.length-1;i++){
             for(let j=i+1;j<sortArr.length;j++){
                 expect(sortArr).satisfy((sortArr)=>{

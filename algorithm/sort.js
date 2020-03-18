@@ -99,7 +99,12 @@ class Sort {
     }
 
     // TODO 插入排序
-    /**/
+    /*
+    * 时间复杂度：
+    * 最佳情况：输入数组按升序排列。T(n) = O(n)
+    * 最坏情况：输入数组按降序排列。T(n) = O(n2)
+    * 平均情况：T(n) = O(n2)
+    * */
     insertionSort(arr = []) {
         if (!utils.isArray(arr)) return [];
         for (let i = 1; i < arr.length; i++) {

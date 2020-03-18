@@ -6,9 +6,9 @@ let REPLACE=0,REORDER=1,PROPS=2,TEXT=3;
 
 function patch(){}
 
-patch.REPLACE=REPLACE;
-patch.REORDER=REORDER;
-patch.PROPS=PROPS;
-patch.TEXT=TEXT;
+patch.REPLACE=REPLACE;// currentNode
+patch.REORDER=REORDER;// 当前元素子级删除元素情况：新增type:1或删除type:0
+patch.PROPS=PROPS;// currentNode
+patch.TEXT=TEXT;// currentNode
 
 export default patch;
