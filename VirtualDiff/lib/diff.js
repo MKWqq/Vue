@@ -3,6 +3,7 @@
  * date:2020-03-11
  * */
 /*
+    思路：查找diff，虚拟dom tree由上往下查找不同。
     疑问:
         新旧虚拟DOM树对比时，对比唯一key是什么？怎么赋值？默认key是什么？常用的key有哪些？
         VNode count属性作用：记录当前节点的所有子节点数量
@@ -38,14 +39,14 @@ function diff(oldTree, newTree) {
 function dfsWalk(oldNode, newNode, index, patches) {
     if (!oldNode || !newNode) return false;
     let currentPatch=[];// 不直接patches[index]原因：如果没有变化就不存在有空数组情况
-    if (oldNode.tag !== newNode.tag || (oldNode.props.key && oldNode.props.key !== newNode.props.key)) {
-        currentPatch.push({type: patch.REPLACE, node: newNode});
-    } else if (utils.isString(oldNode) && utils.isString(newNode)) {
+    if (utils.isString(oldNode) && utils.isString(newNode)) {
         if (newNode !== oldNode) {
             currentPatch.push({ type: patch.TEXT, content: newNode })
         }
         // Nodes are the same, diff old node's props and children
-    }else {
+    } else if (oldNode.tag !== newNode.tag || (oldNode.props.key && oldNode.props.key !== newNode.props.key)) {
+        currentPatch.push({type: patch.REPLACE, node: newNode});
+    } else {
         // 对比props
         let propsPatches = diffProps(oldNode, newNode);
         propsPatches && currentPatch.push({type: patch.PROPS, props: propsPatches});

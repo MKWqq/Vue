@@ -7,6 +7,10 @@
 import utils from '../../utils'
 class VNode{
     constructor(tag='',props,children=[]){
+        if(props&&!utils.isObject(props)){
+            children=props;
+            props={};
+        }
         this.tag=tag;
         this.children=children;
         this.props=props||{};

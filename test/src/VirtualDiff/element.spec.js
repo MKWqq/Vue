@@ -8,30 +8,30 @@
  * */
 let expect = require('chai').expect;
 // import utils from '../../../VirtualDiff/lib/utils';
-import createElement from '../../../VirtualDiff/lib/element';
+import el from '../../../VirtualDiff/lib/element';
 
-describe('Test createElement', function () {
+describe('Test el', function () {
     let liArr = ['面包', '辣子鸡', '冷吃兔', '关东煮'];
     let childrenNode = liArr.map((childNode, index) => {
-        return createElement('li', {dataIndex: index}, childNode);
+        return el('li', {dataIndex: index}, childNode);
     });
     it('Element\'s count is the sum of its children\'s count',()=>{
-        let rootVNode = createElement('ul', null, childrenNode);
+        let rootVNode = el('ul', null, childrenNode);
         expect(rootVNode.count).is.equal(8);
     });
     it('Element should have a key property if it\`s passed',()=>{
-        let rootVNode=createElement('ul',{key:'uuid'},null);
+        let rootVNode=el('ul',{key:'uuid'},null);
         expect(rootVNode.key).is.equal('uuid');
     });
     it('Passing dynamic parameters: `props` is optional',function(){
-        let rootVNode = createElement('ul', null, childrenNode);
+        let rootVNode = el('ul', null, childrenNode);
         expect(rootVNode.tag).is.equal('ul');
         expect(rootVNode.children).is.a('array').and.has.lengthOf(liArr.length);
         expect(rootVNode.children[0].count).is.equal(1);
         expect(rootVNode.props).is.a('object').is.not.null;
     });
     it('test create vNode:', function () {
-        let rootVNode = createElement('ul', {id: 'ul'}, childrenNode);
+        let rootVNode = el('ul', {id: 'ul'}, childrenNode);
         // todo 测试tag是否赋值成功
         expect(rootVNode.tag).is.a('string', 'tag数据类型应为string').is.equal('ul');
         expect(rootVNode.children).be.a('array', 'children数据类型应为array').lengthOf(liArr.length);
@@ -45,7 +45,7 @@ describe('Test createElement', function () {
         expect(childrenNode[0].count).is.equal(1);
     });
     it('has props,test virtual element render:',function(){
-        let rootVNode = createElement('ul', {id: 'ul'}, childrenNode);
+        let rootVNode = el('ul', {id: 'ul'}, childrenNode);
         let rootNode=rootVNode.render();
         // todo 测试vNode render方法
         expect(rootNode.tagName.toLowerCase()).is.equal('ul');

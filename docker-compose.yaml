@@ -1,0 +1,23 @@
+version: "2"
+services:
+
+  cwp-epay:
+    image: registry.cn-shanghai.aliyuncs.com/axf-epay/epay-cwp:02692
+    restart: always
+    container_name: cwp-epay
+    volumes:
+      - ./config:/cwp/server/deployment_config/
+      - ./logs:/cwp/server/logs/
+    ports:
+      - "7710:7710"
+    environment:
+      - NPM_CONFIG_LOGLEVEL=info
+      - TZ=Asia/Shanghai
+      - PORT=7710
+      - RUN_ENV=preview
+    mem_limit: 209715200
+
+    networks:
+      default:
+        external:
+          name: test-network
