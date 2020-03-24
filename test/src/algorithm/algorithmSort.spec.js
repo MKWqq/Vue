@@ -19,6 +19,9 @@ describe('排序算法测试',function(){
         checkMinToMax(sort.insertionSort([44,3,38,5,47,15,36,26,27,2,46,4,19,50,48,33]),'insertionSort');
         checkMinToMax(sort.binaryInsertionSort([11,12,13,14,15,16,3,44,38,5,47,15,36,26,27,2,46,4,19,50,48,33]),'binaryInsertionSort');
     });
+    it('希尔排序',()=>{
+        checkMinToMax(sort.shellSort([44, 3, 38, 5, 47, 15, 36, 26, 27, 2, 46, 4, 19, 50, 48, 33]), 'shellSort');
+    });
     function checkMinToMax(sortArr,errorMessage){
         // console.log(errorMessage,sortArr);
         for(let i=0;i<sortArr.length-1;i++){

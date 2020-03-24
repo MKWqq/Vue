@@ -138,6 +138,31 @@ class Sort {
         }
         return arr;
     }
+
+    // TODO 希尔排序
+    /* 思路：
+        分段后排序，间隔值为gap。
+        不断减少gap值，然后gap变一次循环对比排序一次。
+        对比方法，间隔gap的数据两两对比
+    */
+    shellSort(arr = []) {
+        let len = arr.length, temp, gap = 1;
+        // 初始化最大gap值
+        while (gap < len / 3) {
+            gap = gap * 3 + 1;
+        }
+        // 更新gap值，类似n分gap
+        for (gap; gap > 0; gap = Math.floor(gap / 3)) {
+            for (let i = gap; i < len; i++) {
+                temp = arr[i];
+                for (let j = i - gap; j >= 0 && arr[j] > temp; j -= gap) {
+                    arr[i] = arr[j];
+                    arr[j]=temp;
+                }
+            }
+        }
+        return arr;
+    }
 }
 
 export default new Sort();
