@@ -16,11 +16,7 @@ module.exports=merge(baseWebpack,{
                 exclude:[
                     resolve('node_modules')
                 ],
-                loader: 'babel-loader',
-                query:{
-                    // 引入了istanbul插件来检测Coverage。安装babel-plugin-istanbul插件
-                    plugins:['istanbul']
-                }
+                loader: 'babel-loader'
             },
         ]
     }
