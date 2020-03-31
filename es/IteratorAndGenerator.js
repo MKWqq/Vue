@@ -5,20 +5,16 @@
  * */
 import utils from '../utils';
 
+function* objectGenerator(){
+    for(let key in this){
+        yield this[key];
+    }
+}
+
 export default{
     // TODO make object iterator
-    makeObjectIterator(obj){
-        if (!utils.isObject(obj)) {
-            throw new Error('数据类型必须为object');
-        }
-        function* objectGenerator() {
-            if (!utils.isObject(obj)) {
-                throw new Error('数据类型必须为object');
-            }
-            for (let key in obj) {
-                yield obj[key];
-            }
-        }
-        obj[Symbol.iterator] = objectGenerator;
+    makeObjectIterator(){
+        // object新增遍历器接口，可使用for...of
+        Object.prototype[Symbol.iterator]=objectGenerator;
     }
 }

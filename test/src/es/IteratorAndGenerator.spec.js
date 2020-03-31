@@ -7,10 +7,12 @@ import addIterator from '../../../es/IteratorAndGenerator'
 
 describe('Test IteratorAndGenerator',()=>{
     it('make object iterator',()=>{
+        addIterator.makeObjectIterator();
         let obj={name:'wqq',age:24};
-        addIterator.makeObjectIterator(obj);
+        // 检测for...of返回的value是否为obj[key]
+        let objValues=Object.values(obj),i=0;
         for(let value of obj){
-            console.log('makeObjectIterator',value);
+            expect(value).is.equal(objValues[i++]);
         }
     });
 });
