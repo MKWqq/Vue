@@ -1,5 +1,5 @@
 /**
- * describe:观察者模式(observer mode)，即数据对象监听，一旦对象有所变化，就作出相应反应。用es6的Proxy
+ * describe:观察者模式(observer mode)，即数据对象监听，一旦对象有所变化，就作出相应反应。用es6的Proxy/Reflect/Decorator
  * date:2020/03/25
  * */
 import {autobind} from 'core-decorators';
